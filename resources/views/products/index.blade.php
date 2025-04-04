@@ -12,6 +12,12 @@
 </a>
 
     <h1 class="mb-4">Product List</h1>
+    
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
@@ -29,7 +35,19 @@
                 <td>{{ $product->name }}</td>
                 <td>${{ number_format($product->price, 2) }}</td>
                 <td>{{ $product->quantity }}</td>
-            </tr>
+                <td class="d-flex gap-2">
+    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
+    
+    <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">
+                Delete
+            </button>
+            </form>
+</td>
+ </tr>
+     
             @endforeach
         </tbody>
     </table>
