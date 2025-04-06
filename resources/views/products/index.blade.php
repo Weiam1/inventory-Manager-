@@ -33,7 +33,9 @@
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
+                <th>Image</th>
                 <th>Name</th>
+                <th>Description</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Actions</th> 
@@ -43,7 +45,15 @@
             @foreach ($products as $product)
             <tr>
                 <td>{{ $product->id }}</td>
+                <td>
+    @if ($product->image)
+        <img src="{{ asset('images/' . $product->image) }}" width="60" height="60" style="object-fit: cover; border-radius: 8px;">
+    @else
+        <span class="text-muted">No Image</span>
+    @endif
+</td>
                 <td>{{ $product->name }}</td>
+                <td>{{ $product->description }}</td>
                 <td>${{ number_format($product->price, 2) }}</td>
                 <td>{{ $product->quantity }}</td>
                 <td class="d-flex gap-2">
