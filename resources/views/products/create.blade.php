@@ -10,7 +10,8 @@
 <div class="container mt-5">
     <h1 class="mb-4">Add New Product</h1>
 
-    <form action="{{ route('products.store') }}" method="POST">
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data"
+    >
         @csrf
         <div class="mb-3">
             <label>Name</label>
@@ -30,6 +31,11 @@
         <div class="mb-3">
             <label>Quantity</label>
             <input type="number" name="quantity" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Product Image</label>
+            <input type="file" name="image" class="form-control">
         </div>
 
         <button type="submit" class="btn btn-success">Save Product</button>

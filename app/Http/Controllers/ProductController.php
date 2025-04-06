@@ -34,17 +34,31 @@ public function store(Request $request)
         'description' => 'nullable|string',
         'price' => 'required|numeric',
         'quantity' => 'required|integer',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
     ]);
 
-    \App\Models\Product::create([
+    $imageName = null;
+
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+    }
+
+
+    Product::create([
         'name' => $request->name,
         'description' => $request->description,
         'price' => $request->price,
         'quantity' => $request->quantity,
+        'image' => $imageName,
     ]);
 
     return redirect()->route('products.index')->with('success', 'Product added successfully!');
 }
+
+
+
 
 public function edit($id)
 {
@@ -61,7 +75,7 @@ public function update(Request $request, $id)
         'quantity' => 'required|integer',
     ]);
 
-    $product = \App\Models\Product::findOrFail($id);
+    $product =Product::findOrFail($id);
 
     $product->update([
         'name' => $request->name,
@@ -75,7 +89,13 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
-    $product = \App\Models\Product::findOrFail($id);
+    $product = Product::findOrFail($id);
+
+    
+      if ($product->image && file_exists(public_path('images/' . $product->image))) {
+        unlink(public_path('images/' . $product->image));
+    }
+
     $product->delete();
 
     return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
