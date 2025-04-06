@@ -4,17 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Product;
+
+
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = \App\Models\Product::all();
-        return view('products.index', compact('products'));
-    }
-    public function create()
+    public function index(Request $request)
+{
+    $search = $request->query('search');
+
+    $products = Product::when($search, function ($query, $search) {
+        return $query->where('name', 'like', '%' . $search . '%');
+    })->get();
+
+    return view('products.index', compact('products', 'search'));
+}
+
+public function create()
 {
     return view('products.create');
 }
+
+
 
 public function store(Request $request)
 {
