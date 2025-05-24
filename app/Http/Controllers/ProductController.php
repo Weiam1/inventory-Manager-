@@ -45,6 +45,7 @@ public function store(Request $request)
         $request->image->move(public_path('images'), $imageName);
     }
 
+    
 
     Product::create([
         'name' => $request->name,
@@ -53,9 +54,18 @@ public function store(Request $request)
         'quantity' => $request->quantity,
         'image' => $imageName,
     ]);
+    
 
     return redirect()->route('products.index')->with('success', 'Product added successfully!');
 }
+
+public function shop()
+{
+    $products = \App\Models\Product::latest()->get(); // You can filter/paginate later
+
+    return view('shop.index', compact('products'));
+}
+
 
 
 
