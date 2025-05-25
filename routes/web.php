@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/shop', [\App\Http\Controllers\ProductController::class, 'shop'])->middleware(['auth'])->name('shop');
+Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('checkout.store');
+Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('orders.store');
 
 });
 

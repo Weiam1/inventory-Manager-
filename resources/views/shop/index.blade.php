@@ -7,6 +7,13 @@
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+        @if(session('success'))
+    <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
+        {{ session('success') }}
+    </div>
+@endif
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($products as $product)
                     <div class="bg-white shadow rounded p-4">

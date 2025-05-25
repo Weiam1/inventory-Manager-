@@ -11,13 +11,24 @@ class ProductController extends Controller
 {
     public function index(Request $request)
 {
-    $search = $request->query('search');
+      if (auth()->user()->role === 'admin') {
+        // Admin: Show product management interface
+        $search = $request->query('search');
 
-    $products = Product::when($search, function ($query, $search) {
-        return $query->where('name', 'like', '%' . $search . '%');
-    })->get();
+        $products = Product::when($search, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })->get();
 
-    return view('products.index', compact('products', 'search'));
+        return view('products.index', compact('products', 'search'));
+    }
+
+    if (auth()->user()->role === 'customer') {
+        // Customer: Redirect to shop view
+        return redirect()->route('shop');
+    }
+
+    // If role is undefined
+    abort(403, 'Unauthorized access.');
 }
 
 public function create()
