@@ -48,7 +48,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     if (Auth::user()->role === 'customer') {
-        return redirect()->intended('/profile');
+        return redirect()->intended('/shop');
     }
 
     // Default fallback redirect
