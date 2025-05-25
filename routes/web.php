@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/shop', [\App\Http\Controllers\ProductController::class, 'shop'])->middleware(['auth'])->name('shop');
 Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('checkout.store');
 Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('orders.store');
+Route::get('/checkout', function () {
+    return view('checkout');
+})->middleware(['auth'])->name('checkout');
 
 });
 

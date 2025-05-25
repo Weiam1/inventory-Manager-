@@ -41,6 +41,15 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if(session('cart') && count(session('cart')) > 0)
+    <div class="mt-4 text-right">
+        <a href="{{ route('checkout') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Proceed to Checkout
+        </a>
+    </div>
+@endif
+
+
             @else
                 <p class="text-gray-600">Your cart is empty.</p>
             @endif
