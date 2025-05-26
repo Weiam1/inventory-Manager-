@@ -34,6 +34,18 @@
             <input type="number" name="quantity" value="{{ $product->quantity }}" class="form-control" required>
         </div>
 
+        <div class="mb-4">
+    <label for="category_id" class="block font-semibold">Category:</label>
+    <select name="category_id" id="category_id" class="w-full border rounded px-3 py-2">
+        <option value="">-- Select Category --</option>
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
         <button type="submit" class="btn btn-success">Update Product</button>
         <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
     </form>

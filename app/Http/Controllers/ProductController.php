@@ -33,7 +33,8 @@ class ProductController extends Controller
 
 public function create()
 {
-    return view('products.create');
+$categories = \App\Models\Category::all();
+    return view('products.create', compact('categories'));
 }
 
 
@@ -46,6 +47,7 @@ public function store(Request $request)
         'price' => 'required|numeric',
         'quantity' => 'required|integer',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    'category_id' => 'nullable|exists:categories,id'
 
     ]);
 
@@ -64,6 +66,8 @@ public function store(Request $request)
         'price' => $request->price,
         'quantity' => $request->quantity,
         'image' => $imageName,
+            'category_id' => $request->category_id,
+
     ]);
     
 
@@ -84,8 +88,8 @@ public function shop()
 public function edit($id)
 {
     $product = \App\Models\Product::findOrFail($id);
-    return view('products.edit', compact('product'));
-}
+ $categories = \App\Models\Category::all();
+    return view('products.edit', compact('product', 'categories'));}
 
 public function update(Request $request, $id)
 {
@@ -94,6 +98,8 @@ public function update(Request $request, $id)
         'description' => 'nullable|string',
         'price' => 'required|numeric',
         'quantity' => 'required|integer',
+        'category_id' => 'nullable|exists:categories,id',
+
     ]);
 
     $product =Product::findOrFail($id);
@@ -103,6 +109,8 @@ public function update(Request $request, $id)
         'description' => $request->description,
         'price' => $request->price,
         'quantity' => $request->quantity,
+        'category_id' => $request->category_id,
+
     ]);
 
     return redirect()->route('products.index')->with('success', 'Product updated successfully!');

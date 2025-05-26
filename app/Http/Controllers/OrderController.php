@@ -39,4 +39,15 @@ class OrderController extends Controller
 
         return redirect()->route('shop')->with('success', 'Order placed successfully!');
     }
+
+    public function indexForCustomer()
+{
+    $orders = \App\Models\Order::with('items.product')
+        ->where('user_id', auth()->id())
+        ->latest()
+        ->get();
+
+    return view('orders.customer-index', compact('orders'));
+}
+
 }
