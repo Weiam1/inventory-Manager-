@@ -17,13 +17,15 @@
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Admin Dashboard') }}
             </x-nav-link>
-        @endif
-
-        @if(auth()->user()->role === 'customer')
+         @elseif(auth()->user()->role === 'customer')
             <x-nav-link href="/profile" :active="request()->is('profile')">
                 {{ __('My Account') }}
             </x-nav-link>
-        @endif
+    <x-nav-link :href="route('orders.customer')" :active="request()->routeIs('orders.customer')">
+        {{ __('My Orders') }}
+    </x-nav-link>
+@endif
+
     @endauth
 </div>
 </div>
@@ -82,13 +84,15 @@
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin Dashboard') }}
                     </x-responsive-nav-link>
-                @endif
-
-                @if(auth()->user()->role === 'customer')
+                  @elseif(auth()->user()->role === 'customer')
                     <x-responsive-nav-link href="/profile" :active="request()->is('profile')">
                         {{ __('My Account') }}
                     </x-responsive-nav-link>
-                @endif
+    <x-responsive-nav-link :href="route('orders.customer')" :active="request()->routeIs('orders.customer')">
+        {{ __('My Orders') }}
+    </x-responsive-nav-link>
+@endif
+
             @endauth
         </div>
 

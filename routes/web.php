@@ -22,10 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/shop', [\App\Http\Controllers\ProductController::class, 'shop'])->middleware(['auth'])->name('shop');
 Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('checkout.store');
-Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('orders.store');
 Route::get('/checkout', function () {
     return view('checkout');
 })->middleware(['auth'])->name('checkout');
+Route::get('/my-orders', [\App\Http\Controllers\OrderController::class, 'indexForCustomer'])->name('orders.customer');
 
 });
 
