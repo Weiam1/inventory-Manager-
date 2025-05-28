@@ -43,9 +43,12 @@
                 </table>
                 @if(session('cart') && count(session('cart')) > 0)
     <div class="mt-4 text-right">
-        <a href="{{ route('checkout') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-            Proceed to Checkout
-        </a>
+         <form action="{{ route('checkout.store') }}" method="POST">
+            @csrf
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Proceed to Checkout
+            </button>
+        </form>
     </div>
 @endif
 

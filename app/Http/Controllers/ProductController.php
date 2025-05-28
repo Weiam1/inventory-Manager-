@@ -74,11 +74,23 @@ public function store(Request $request)
     return redirect()->route('products.index')->with('success', 'Product added successfully!');
 }
 
-public function shop()
+public function shop(Request $request)
 {
-    $products = \App\Models\Product::latest()->get(); // You can filter/paginate later
+    
+$query = Product::query();
 
-    return view('shop.index', compact('products'));
+    if ($request->filled('category')) {
+        $query->where('category_id', $request->category);
+    }
+
+    if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    $products = $query->latest()->get();
+    $categories = \App\Models\Category::all();
+
+    return view('shop.index', compact('products', 'categories'));
 }
 
 

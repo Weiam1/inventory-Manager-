@@ -17,6 +17,13 @@
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Admin Dashboard') }}
             </x-nav-link>
+             <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                                {{ __('Manage Products') }}
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                                {{ __('Manage Categories') }}
+                            </x-nav-link>
          @elseif(auth()->user()->role === 'customer')
             <x-nav-link href="/profile" :active="request()->is('profile')">
                 {{ __('My Account') }}
@@ -24,9 +31,13 @@
     <x-nav-link :href="route('orders.customer')" :active="request()->routeIs('orders.customer')">
         {{ __('My Orders') }}
     </x-nav-link>
+     <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+        🛒 Cart
+    </x-nav-link>
 @endif
 
     @endauth
+    
 </div>
 </div>
 
@@ -84,12 +95,23 @@
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin Dashboard') }}
                     </x-responsive-nav-link>
+                   <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                        {{ __('Manage Products') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                        {{ __('Manage Categories') }}
+                    </x-responsive-nav-link>
+
                   @elseif(auth()->user()->role === 'customer')
                     <x-responsive-nav-link href="/profile" :active="request()->is('profile')">
                         {{ __('My Account') }}
                     </x-responsive-nav-link>
     <x-responsive-nav-link :href="route('orders.customer')" :active="request()->routeIs('orders.customer')">
         {{ __('My Orders') }}
+    </x-responsive-nav-link>
+      <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+        🛒 Cart
     </x-responsive-nav-link>
 @endif
 
