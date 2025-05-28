@@ -14,10 +14,39 @@
     </div>
 @endif
 
+<div class="mb-6">
+    <form method="GET" action="{{ route('shop') }}" class="flex flex-col md:flex-row md:items-center md:space-x-4">
+        <div class="flex-grow">
+            <input type="text" name="search" placeholder="Search product..."
+                   value="{{ request('search') }}"
+                   class="w-full border rounded px-3 py-2 shadow-sm focus:outline-none">
+        </div>
+
+<div class="mb-6">
+    <form method="GET" action="{{ route('shop') }}">
+        <label for="category" class="block mb-1 font-semibold">Filter by Category:</label>
+        <select name="category" id="category" onchange="this.form.submit()" class="w-1/2 border rounded px-3 py-2">
+            <option value=""> All </option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+</div>
+
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($products as $product)
                     <div class="bg-white shadow rounded p-4">
-                        <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-48 object-cover rounded mb-2" alt="{{ $product->name }}">
+@if($product->image)
+    <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="w-32 h-32 object-cover">
+@else
+    <div class="w-32 h-32 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+        No image
+    </div>
+@endif
                         <h3 class="text-lg font-bold">{{ $product->name }}</h3>
                         <p class="text-gray-600">{{ $product->price }} €</p>
                         <p class="text-sm text-gray-500 mt-1">{{ Str::limit($product->description, 100) }}</p>
