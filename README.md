@@ -1,33 +1,95 @@
-# 🛒 Inventory Manager
 
-A simple inventory management system built with **Laravel 12** and **Bootstrap 5**.
+# Inventory Manager
 
-## 📋 Features
+Inventory Manager is a Laravel-based inventory management system that includes two distinct interfaces:
 
-- Admin can:
-  - Manage Products (CRUD)
-  - Upload product images
-  - Assign categories to products
-  - Manage orders
-- Customers can:
-  - Browse products
-  - Place orders (coming soon)
-  - View order history (future)
+* Admin Interface
+* Customer Interface
 
-## 🗃️ Database Structure
+---
 
-- **Users**: Admins and Customers (via roles or separate tables)
-- **Products**: name, description, price, quantity, image, category
-- **Categories**: related to products (1-to-many)
-- **Orders**: related to customers (many-to-one)
-- **Order_Product**: pivot table (many-to-many between orders and products)
+## 1. Admin Interface
 
-## 🛠️ Technologies
+The admin dashboard provides complete control over the system with the following features:
 
-- Laravel 12 (PHP 8.3)
-- Bootstrap 5
-- MySQL (via XAMPP)
-- Composer
-- Git & GitHub
+* Create, edit, and delete products
+* Manage categories
+* View all customer orders
+* View customer information and order history
+* Upload product images
+* Search for products by name
+* View product inventory (quantity and stock levels)
+* Assign products to categories
 
+---
 
+## 2. Customer Interface
+
+The customer side of the system allows for simple and user-friendly interaction:
+
+* Browse available products with images, prices, and descriptions
+* Place new orders
+* View order history
+
+---
+
+## Database Structure
+
+### `users` table
+
+* Stores system users (admins or regular users)
+* Fields: `id`, `name`, `email`, `password`, `role`, timestamps
+
+### `products` table
+
+* Stores product information
+* Fields: `id`, `name`, `description`, `price`, `quantity`, `image`, `category_id`, timestamps
+* Relationships:
+
+  * Belongs to a category
+  * Belongs to many orders via a pivot table
+
+### `categories` table
+
+* Stores product categories
+* Fields: `id`, `name`, timestamps
+* Relationships:
+
+  * Has many products
+
+### `customers` table
+
+* Stores customer information
+* Fields: `id`, `name`, `email`, `phone`, `address`, timestamps
+* Relationships:
+
+  * Has many orders
+
+### `orders` table
+
+* Stores order records
+* Fields: `id`, `customer_id`, timestamps
+* Relationships:
+
+  * Belongs to one customer
+  * Has many products via the `order_product` table
+
+### `order_product` table (pivot table)
+
+* Connects orders and products
+* Fields: `id`, `order_id`, `product_id`, `quantity`, `price`, timestamps
+
+---
+
+## Relationship Summary
+
+| From     | Type         | To      |
+| -------- | ------------ | ------- |
+| Category | One to Many  | Product |
+| Customer | One to Many  | Order   |
+| Order    | Many to Many | Product |
+| Product  | Many to Many | Order   |
+
+---
+
+[admin@example.com] password:password
