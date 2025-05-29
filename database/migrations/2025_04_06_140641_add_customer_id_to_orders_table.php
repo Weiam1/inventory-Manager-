@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             if (!Schema::hasColumn('orders', 'customer_id')) {
-                $table->unsignedBigInteger('customer_id')->after('id');
+                $table->unsignedBigInteger('customer_id')->nullable()->after('id');
+
             } 
         
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
